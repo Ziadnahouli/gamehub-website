@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Failed - Game Hub</title>
+    <style>
+        body {
+            background: #0b0f19;
+            color: #ffffff;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 3rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 63, 52, 0.2);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            max-width: 400px;
+        }
+
+        .icon {
+            font-size: 3rem;
+            color: #ff3f34;
+            margin-bottom: 1.5rem;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #ff3f34;
+        }
+
+        p {
+            color: #a1a1aa;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .footer {
+            margin-top: 2rem;
+            font-size: 0.7rem;
+            color: #4b5563;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="icon">⚠️</div>
+        <h1>Payment Incomplete</h1>
+        <p>Your payment attempt was cancelled or failed. You will be redirected back to the application in a few
+            seconds...</p>
+
+        <div class="footer">GAME HUB PRO • TRANSACTION SECURITY ACTIVE</div>
+    </div>
+
+    <script>
+        window.onload = function () {
+            setTimeout(() => {
+                // Return to local app failure endpoint
+                window.location.href = "http://127.0.0.1:5000/api/payment/failure";
+            }, 3000);
+        };
+    </script>
+</body>
+
+</html>

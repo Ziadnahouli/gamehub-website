@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Returning to Game Hub...</title>
+    <style>
+        body {
+            background: #0b0f19;
+            color: #ffffff;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 3rem;
+            border-radius: 20px;
+            border: 1px solid rgba(88, 101, 242, 0.2);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            max-width: 400px;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(88, 101, 242, 0.1);
+            border-top: 4px solid #5865f2;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1.5rem;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #5865f2;
+        }
+
+        p {
+            color: #a1a1aa;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .footer {
+            margin-top: 2rem;
+            font-size: 0.7rem;
+            color: #4b5563;
+            font-weight: bold;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="spinner"></div>
+        <h1>Payment Verified!</h1>
+        <p>Your subscription is active. Please hold for a moment while we return you to the application...</p>
+
+        <div class="footer">GAME HUB PRO • SECURE ENCRYPTION ACTIVE</div>
+    </div>
+
+    <script>
+        // PROFESSIONAL REDIRECT LOGIC
+        // This script bridges the gap between the public domain and the local app.
+        window.onload = function () {
+            // Wait 2 seconds for visual confirmation then bridge back
+            setTimeout(() => {
+                const params = new URLSearchParams(window.location.search);
+                const localUrl = "http://127.0.0.1:5000/api/payment/success?" + params.toString();
+
+                // Perform the jump
+                window.location.href = localUrl;
+            }, 2000);
+        };
+    </script>
+</body>
+
+</html>
