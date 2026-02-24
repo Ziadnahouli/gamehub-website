@@ -53,10 +53,10 @@ export default async function handler(req, res) {
                 currency: "USD",
                 invoice: `GameHub Pro - ${plan} (${email})`,
                 externalId: parseInt(ext_id),
-                successCallbackUrl: `https://gamehub-launcher.xyz/api/payment/success?email=${encodeURIComponent(email)}&ext_id=${ext_id}&plan=${plan}`,
-                failureCallbackUrl: `https://gamehub-launcher.xyz/api/payment/failure`,
-                successRedirectUrl: `https://gamehub-launcher.xyz/api/payment/success?email=${encodeURIComponent(email)}&ext_id=${ext_id}&plan=${plan}`,
-                failureRedirectUrl: `https://gamehub-launcher.xyz/api/payment/failure`
+                successCallbackUrl: `https://gamehub-launcher.xyz/payment/success?email=${encodeURIComponent(email)}&ext_id=${ext_id}&plan=${plan}`,
+                failureCallbackUrl: `https://gamehub-launcher.xyz/payment/failure`,
+                successRedirectUrl: `https://gamehub-launcher.xyz/payment/success?email=${encodeURIComponent(email)}&ext_id=${ext_id}&plan=${plan}`,
+                failureRedirectUrl: `https://gamehub-launcher.xyz/payment/failure`
             })
         });
 
