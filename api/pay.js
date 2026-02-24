@@ -36,46 +36,48 @@ export default async function handler(req, res) {
         return res.status(500).json({ error: 'Server configuration error' });
     }
 
-    const initiationUrl = 'https://api.whish.limited/api_v2/checkout/initiate_payment';
+    const initiationUrl = 'https://api.whish.money/itel-service/api/payment/whish';
 
     try {
         const response = await fetch(initiationUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Channel-Id': WHISH_CHANNEL,
-                'Api-Key': WHISH_SECRET
+                'channel': WHISH_CHANNEL,
+                'secret': WHISH_SECRET,
+                'websiteUrl': 'gamehub-launcher.xyz',
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
             },
             body: JSON.stringify({
                 amount: amount,
                 currency: "USD",
-                invoice_description: `GameHub Pro - ${plan} (${email})`,
-                external_id: ext_id,
-                // Redirect back to the bridge page on success/failure
-                success_redirect_url: `https://gamehub-launcher.xyz/api/payment/success?email=${encodeURIComponent(email)}&ext_id=${ext_id}&plan=${plan}`,
-                failure_redirect_url: `https://gamehub-launcher.xyz/api/payment/failure`
+                invoice: `GameHub Pro - ${plan} (${email})`,
+                externalId: parseInt(ext_id),
+                successCallbackUrl: `https://gamehub-launcher.xyz/api/payment/success?email=${encodeURIComponent(email)}&ext_id=${ext_id}&plan=${plan}`,
+                failureCallbackUrl: `https://gamehub-launcher.xyz/api/payment/failure`,
+                successRedirectUrl: `https://gamehub-launcher.xyz/api/payment/success?email=${encodeURIComponent(email)}&ext_id=${ext_id}&plan=${plan}`,
+                failureRedirectUrl: `https://gamehub-launcher.xyz/api/payment/failure`
             })
         });
 
         const data = await response.json();
 
-        if (data.status === 'success' && data.data && data.data.collectUrl) {
-            // Redirect the user directly to the Whish hosted payment page
-            return res.redirect(302, data.data.collectUrl);
-        } else {
-            console.error("Whish Initiation Failed:", data);
-            return res.status(500).json({
-                error: 'Whish Initiation Failed',
-                details: data.message || data.error || 'Unknown error'
-            });
+        // Check for success status (either boolean true or string 'success')
+        if (data.status === true || data.status === 'success') {
+            const collectUrl = data.data?.collectUrl || data.collectUrl;
+            if (collectUrl) {
+                return res.redirect(302, collectUrl);
+            }
         }
+
+        console.error("Whish Initiation Failed:", data);
+        return res.status(500).json({
+            error: 'Whish Initiation Failed',
+            details: data.message || data.error || 'Unknown error'
+        });
 
     } catch (error) {
         console.error("Payment Bridge Error:", error);
-        return res.status(500).json({
-            error: 'Internal Server Error',
-            message: error.message,
-            stack: error.stack
-        });
+        return res.status(500).json({ error: 'Internal Server Error' });
     }
 }
