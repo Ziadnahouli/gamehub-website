@@ -72,6 +72,10 @@ export default async function handler(req, res) {
 
     } catch (error) {
         console.error("Payment Bridge Error:", error);
-        return res.status(500).json({ error: 'Internal Server Error' });
+        return res.status(500).json({
+            error: 'Internal Server Error',
+            message: error.message,
+            stack: error.stack
+        });
     }
 }
