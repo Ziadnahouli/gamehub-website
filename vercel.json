@@ -1,0 +1,14 @@
+{
+  "redirects": [
+    {
+      "source": "/api/payment/success",
+      "destination": "http://127.0.0.1:5000/api/payment/success",
+      "permanent": false
+    },
+    {
+      "source": "/api/payment/failure",
+      "destination": "http://127.0.0.1:5000/api/payment/failure",
+      "permanent": false
+    }
+  ]
+}
